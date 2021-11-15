@@ -1,0 +1,20 @@
+ 
+<!DOCTYPE html>
+ {% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+  <meta HTTP-EQUIV="EXPIRES" CONTENT="Mon, 20 Oct 2000 00:00:01 GMT">
+  <title>{% block title %}{% endblock %} </title>
+  <meta name=“description” content=“”>
+  <script type="module" crossorigin src="{% static 'assets/main.js' %}"></script>
+  <link rel="modulepreload" href="{% static 'assets/vendor.js' %}">
+  <link rel="stylesheet" href="{% static 'assets/main.css' %}">
+ 
+</head>
+<body>
+   <div id="app"></div>
+  </body>
+</html>

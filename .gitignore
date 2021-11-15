@@ -1,0 +1,12 @@
+/node_modules/
+/dist/
+/.vscode/
+.DS_Store
+/.idea/
+/mysite/db.sqlite3
+__pycache__/
+*.py[cod]
+*$py.class
+/venv/
+
+
