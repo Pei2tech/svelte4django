@@ -54,10 +54,11 @@ class ToReplace(object):
             for entry in buildedfiles:
                 if os.path.exists(assetsDir / entry):
                      os.remove(assetsDir / entry)
-            count=0
-            while(True):
+        count=0
+        while(True):
+            if os.path.exists(assetsDir):
                 with os.scandir(assetsDir) as items:
-                    for entry in items:
+                    for entry in items:                        
                         if entry.name in buildedfiles:
                             time.sleep(0.2)
                             if entry.name == "vendor.css":
@@ -67,7 +68,7 @@ class ToReplace(object):
                     if count>buildmaxtime:
                         print("over time fail!!")
                         return False
-                count +=1
+                count +=1                
                 time.sleep(1)
         return False
 
