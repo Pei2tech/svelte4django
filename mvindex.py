@@ -12,7 +12,7 @@ staticDir = BASE_DIR / hostDir / "statics"
 assetsDir = staticDir / "assets"
 indexfile = BASE_DIR / hostDir / "templates" / "index.html"
 buildmaxtime = 10 # sec
-buildedfiles=["main.js","main.css","vendor.js, vendor.css"]
+buildedfiles=["main.js","main.css","vendor.js", "vendor.css"]
 
 
 html_head = """ 
