@@ -13,6 +13,7 @@ export default defineConfig({
   plugins: [svelte()],
   build: {
     outDir: path.join(__dirname,"mysite/statics"),
+    emptyOutDir:false,
     rollupOptions: {
       input: glob.sync(path.resolve(__dirname,"index.html")),
       // external: [
