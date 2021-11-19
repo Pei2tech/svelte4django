@@ -6,12 +6,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent
 
-hostDir=Path("mysite")
-templateDir = BASE_DIR / hostDir / "templates"
-staticDir = BASE_DIR / hostDir / "statics"
-assetsDir = staticDir / "assets"
-indexfile = BASE_DIR / hostDir / "templates" / "index.html"
-buildmaxtime = 10 # sec
+buildmaxtime = 20 # sec
 buildedfiles=["main.js","main.css","vendor.js", "vendor.css"]
 
 
@@ -24,7 +19,7 @@ html_head = """
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
   <meta HTTP-EQUIV="EXPIRES" CONTENT="Mon, 20 Oct 2000 00:00:01 GMT">
-  <title>{% block title %}{% endblock %} </title>
+  <title></title>
   <meta name=“description” content=“”>
   <script type="module" crossorigin src="{% static 'assets/main.js' %}"></script>
   <link rel="modulepreload" href="{% static 'assets/vendor.js' %}">
@@ -48,28 +43,44 @@ class ToReplace(object):
        self.target=""
        self.html=""
 
+    def assignDir(self):
+       self.templateDir = BASE_DIR / self.dirname / "templates"
+       self.staticDir = BASE_DIR / self.dirname / "statics"
+       self.assetsDir = self.staticDir / "assets"
+       self.indexfile = BASE_DIR / self.dirname / "templates" / "index.html"
+
+
+    def checkprojctName(self):
+        with os.scandir(BASE_DIR) as items:
+            for entry in items:
+                if entry.is_dir():
+                    with os.scandir(entry.path) as subitems:
+                        for subentry in subitems:
+                            if subentry.is_file() and subentry.name=="manage.py":
+                                self.dirname = Path(entry.name)
+                                return True
+        return False
 
     def checkVendorcss(self):
-        if os.path.exists(assetsDir):
+        if os.path.exists(self.assetsDir):
             for entry in buildedfiles:
-                if os.path.exists(assetsDir / entry):
-                     os.remove(assetsDir / entry)
+                if os.path.exists(self.assetsDir / entry):
+                     os.remove(self.assetsDir / entry)
         count=0
         while(True):
-            if os.path.exists(assetsDir):
-                with os.scandir(assetsDir) as items:
-                    for entry in items:                        
-                        if entry.name in buildedfiles:
-                            time.sleep(0.2)
-                            if entry.name == "vendor.css":
-                                return True
-                            else:
-                                return False
-                    if count>buildmaxtime:
-                        print("over time fail!!")
-                        return False
-                count +=1                
-                time.sleep(1)
+            with os.scandir(self.assetsDir) as items:
+                for entry in items:
+                    if entry.name in buildedfiles:
+                        time.sleep(0.2)
+                        if entry.name == "vendor.css":
+                            return True
+                        else:
+                            return False
+                if count>buildmaxtime:
+                    print("time out fail!!")
+                    return False
+            count +=1
+            time.sleep(1)
         return False
 
     def handlefile(self, file):
@@ -95,19 +106,23 @@ class ToReplace(object):
            os.remove(file)
 
     def main(self):
-        sys.argv
-        if len(sys.argv) < 2:
-            self.dirname=Path(hostDir)
+        if self.checkprojctName():
+            self.assignDir()
         else:
+            print("no Django project founded!")
+            exit(0)
+        sys.argv
+        if len(sys.argv) >= 2:
             if sys.argv[1]=="debug":
                 self.html = html_head
                 if self.checkVendorcss():
                     self.html += html_vendorcss
                 self.html += html_tail
-                with open(indexfile, "w") as file:
+                with open(self.indexfile, "w") as file:
                     file.write(self.html)
                 exit()
-            self.dirname = sys.argv[1]
+            # self.dirname = sys.argv[1]
+
         if os.path.exists(Path(self.dirname) / "statics"):
             with os.scandir(Path(self.dirname) / "statics") as it:
                 for entry in it:
