@@ -11,7 +11,7 @@ $ git clone  https://github.com/Pei2tech/svelte4django.git projectname
 $ cd projectname 
 ```
 
-This template uses [poetry](https://python-poetry.org/ "poetry") to manage python packages. However, there is only django need to be installed, you can just install django by pip as you don't want to use poetry.    
+This template uses [poetry](https://python-poetry.org/ "poetry") to manage python packages. However, you can just install django by pip as you don't use poetry.    
 
 ```
 poetry shell
@@ -19,10 +19,8 @@ poetry install
 ```  
 or   
 ```   
-$ python -m venv .venv  
-$source ./.venv/bin/activate  
-(.venv)...$ pip install django   
-```
+$ pip install django   
+```   
 
 for security issue, please use below command to get security key and then update it in the setting.py.       
 ```  
@@ -41,8 +39,8 @@ You can debug frontend (svelte side) and backend (django side) at the same time 
 
 **Django side**  
 
-Change into the root of django directory (mysite), if you haven't already, and run the migrate at the first time if you don't want to ignore the warning. After that, you can run the development server up.    
-Note: please make sure the virtual environment is running.   
+Change into the root directory (mysite) of django, if you haven't already, and run the migrate. After that, you can run the development server up.    
+Note: please make sure the virtual environment running if you have used it.   
 ```  
 (.venv)...$cd mysite
 (.venv)...$python manage.py migrate
@@ -53,7 +51,7 @@ You will see the ouput on the command line for Starting development server at ht
 
 **Svelte side**    
 
-Take another terminal on, and change into the root directory of this project to run below command.  
+Take another terminal on, and change into the project root to run below command.  
 
 ```  
 $npm run watch
@@ -83,7 +81,7 @@ It will add hash on the asset files.
 $npm run build
 ```  
 
-You will see the asset files already hashed as the following ouput.    
+You will see the files already hashed as the following ouput.    
 
 ```
 vite v2.6.14 building for production...
@@ -99,4 +97,4 @@ mysite/statics/assets/index.e7ec5558.css   5.72 KiB / gzip: 1.97 KiB
 ```
 
 **django side**    
-you may use gunicorn, nginx or other else to run django. It is out of the scope of this project.    
+you may use gunicorn, nginx or other else to run django. It is out of the scope of this template.    
