@@ -8,33 +8,14 @@ BASE_DIR = Path(__file__).resolve().parent
 
 buildmaxtime = 20 # sec
 buildedfiles=["main.js","main.css","vendor.js", "vendor.css"]
+html_assets={
+    "main.js":" <script type=\"module\" crossorigin src=\"{% static 'assets/main.js' %}\"></script>\n",
+    "main.css":" <link rel=\"stylesheet\" href=\"{% static 'assets/main.css' %}\">\n",
+    "vendor.js":" <link rel=\"modulepreload\" href=\"{% static 'assets/vendor.js' %}\">\n",
+    "vendor.css":" <link rel=\"stylesheet\" href=\"{% static 'assets/vendor.css' %}\">\n"
+}
 
 
-html_head = """ 
-<!DOCTYPE html>
- {% load static %}
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-  <meta HTTP-EQUIV="EXPIRES" CONTENT="Mon, 20 Oct 2000 00:00:01 GMT">
-  <title></title>
-  <meta name=“description” content=“”>
-  <script type="module" crossorigin src="{% static 'assets/main.js' %}"></script>
-  <link rel="modulepreload" href="{% static 'assets/vendor.js' %}">
-  <link rel="stylesheet" href="{% static 'assets/main.css' %}">
- """
-html_vendorcss ="""
-  <link rel="stylesheet" href="{% static 'assets/vendor.css' %}">
-"""
-html_tail = """
-</head>
-<body>
-   <div id="app"></div>
-  </body>
-</html>
-"""
 
 
 class ToReplace(object):
@@ -61,27 +42,45 @@ class ToReplace(object):
                                 return True
         return False
 
-    def checkVendorcss(self):
+    def readindex(self):
+        file= BASE_DIR / 'index.html'
+        html = ""
+        with open(file) as u1:
+            for content in u1:
+                if content.find("<!DOCTYPE html>") != -1:
+                    index = content.find("<!DOCTYPE html>") + len("<!DOCTYPE html>")
+                    content = content[:index] + "\n {% load static %} \n" + content[index:]
+                    html = html + content
+                elif content.find("main.js") !=-1:
+                    continue
+                else:
+                    html = html + content
+        self.html=html
+
+    def checkassets(self):
+        self.readindex()
         if os.path.exists(self.assetsDir):
             for entry in buildedfiles:
                 if os.path.exists(self.assetsDir / entry):
                      os.remove(self.assetsDir / entry)
         count=0
+        html=""
         while(True):
             with os.scandir(self.assetsDir) as items:
                 for entry in items:
-                    if entry.name in buildedfiles:
+                    if entry.name in html_assets.keys():
                         time.sleep(0.2)
-                        if entry.name == "vendor.css":
-                            return True
-                        else:
-                            return False
+                        html =html+html_assets[entry.name]
+                if html != "":
+                    if self.html.find("</head")!=-1:
+                        index = self.html.find("</head>")
+                        self.html = self.html[:index] + html + self.html[index:]
+                        return True
                 if count>buildmaxtime:
                     print("time out fail!!")
                     return False
             count +=1
             time.sleep(1)
-        return False
 
     def handlefile(self, file):
         with open(file) as u1:
@@ -114,22 +113,20 @@ class ToReplace(object):
         sys.argv
         if len(sys.argv) >= 2:
             if sys.argv[1]=="debug":
-                self.html = html_head
-                if self.checkVendorcss():
-                    self.html += html_vendorcss
-                self.html += html_tail
-                with open(self.indexfile, "w") as file:
-                    file.write(self.html)
+                if self.checkassets():
+                    with open(self.indexfile, "w") as file:
+                        file.write(self.html)
                 exit()
             # self.dirname = sys.argv[1]
 
         if os.path.exists(Path(self.dirname) / "statics"):
             with os.scandir(Path(self.dirname) / "statics") as it:
                 for entry in it:
-                    if entry.name.endswith(".html") and entry.is_file():
+                    if entry.name=="index.html" and entry.is_file():
                         self.handlefile(entry.path)
                         self.writefile(entry.name)
                         self.removefile(entry.path)
+                        break
             exit()
         else:
             print("No dir list")
