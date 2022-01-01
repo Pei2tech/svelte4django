@@ -107,7 +107,7 @@ TEMPLATES = [
 
 ```
 
-If anything is done, please copy the mvindex,py and vite.config.js to the root of this project, and then modify the outDir of vit.config.js as the project name of django is not "mysite". 
+If anything is done, please copy the mvindex,py and vite.config.js from this repository to the root of your project, and then modify the outDir of vit.config.js as the project name of django is not "mysite". 
 
 ```
 outDir: path.join(_dirname, "mysite/statics/assets"),
