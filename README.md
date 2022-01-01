@@ -4,7 +4,7 @@ A simple template for Django + Svelte + Vite + Tailwindcss.
 
 Installation 
 ========
-## install by git clone
+## Install by git clone
 
 **Clone this repository and go into the directory**
 
@@ -129,7 +129,7 @@ Please modify the scripts of package.json as following.  We use the del-cli depe
 Running
 ======
 
-##run on local debug mode  
+## run on local debug mode  
 
 You can debug frontend (svelte side) and backend (django side) at the same time , so you need  two terminals to run it.   
 
@@ -167,7 +167,7 @@ built in 898ms.
 ```   
  Just open your browser at  [http://127.0.0.1:8000](http://127.0.0.1:8000).  The "hello world!!" should be show on the screen.    
 
-### run on production mode  
+## run on production mode  
 
 **svelte side**  
 
