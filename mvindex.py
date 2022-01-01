@@ -2,21 +2,30 @@ import sys
 import os
 import time
 from pathlib import Path
+import hashlib
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent
 
 buildmaxtime = 20 # sec
-buildedfiles=["main.js","main.css","vendor.js", "vendor.css"]
-html_assets={
-    "main.js":" <script type=\"module\" crossorigin src=\"{% static 'assets/main.js' %}\"></script>\n",
-    "main.css":" <link rel=\"stylesheet\" href=\"{% static 'assets/main.css' %}\">\n",
-    "vendor.js":" <link rel=\"modulepreload\" href=\"{% static 'assets/vendor.js' %}\">\n",
-    "vendor.css":" <link rel=\"stylesheet\" href=\"{% static 'assets/vendor.css' %}\">\n"
+
+
+js_assets_head = " <script type=\"module\" href=\"{% static 'assets/"
+js_assets_end = "' %}\"></script>\n"
+assets_head={
+    ".js":" <script type=\"module\" href=\"{% static 'assets/",
+    ".css":" <link rel=\"stylesheet\" href=\"{% static 'assets/",
+    ".ico":" <link rel=\"ico\" href=\"{% static 'assets/",
+}
+assets_end ={
+    ".js": "' %}\"></script>\n",
+    ".css": "' %}\">\n",
+    ".ico": "' %}\">\n",
 }
 
-
-
+html_assets={
+    "main.js":" <script type=\"module\" crossorigin src=\"{% static 'assets/",
+}
 
 class ToReplace(object):
     def __init__(self):
@@ -51,27 +60,40 @@ class ToReplace(object):
                     index = content.find("<!DOCTYPE html>") + len("<!DOCTYPE html>")
                     content = content[:index] + "\n {% load static %} \n" + content[index:]
                     html = html + content
+                elif content.find("favicon.ico") != -1:
+                    if os.path.exists(self.staticDir / "favicon.ico"):
+                        r1 = content.replace(' href="', ' href="{% static \'')
+                        r2 = r1.replace('.ico"', '.ico\' %}"')
+                        html= html + r2
                 elif content.find("main.js") !=-1:
                     continue
                 else:
                     html = html + content
         self.html=html
 
-    def checkassets(self):
+    def checkdebugassets(self):
         self.readindex()
         if os.path.exists(self.assetsDir):
-            for entry in buildedfiles:
-                if os.path.exists(self.assetsDir / entry):
-                     os.remove(self.assetsDir / entry)
-        count=0
-        html=""
-        while(True):
             with os.scandir(self.assetsDir) as items:
                 for entry in items:
+                     os.remove(entry.path)
+        count=0
+        while(True):
+            html = ""
+            with os.scandir(self.assetsDir) as items:
+                assetf=[]
+                for entry in items:
+                    extension = (Path(entry.name).suffix)
+                    assetf.append(entry.name)
                     if entry.name in html_assets.keys():
                         time.sleep(0.2)
-                        html =html+html_assets[entry.name]
-                if html != "":
+                        html =html+html_assets[entry.name]+ entry.name +assets_end[extension]
+                    else:
+                        time.sleep(0.2)
+                        html =html+ assets_head[extension] + entry.name + assets_end[extension]
+
+
+                if html != "" and ("main.js" in assetf) :
                     if self.html.find("</head")!=-1:
                         index = self.html.find("</head>")
                         self.html = self.html[:index] + html + self.html[index:]
@@ -82,18 +104,32 @@ class ToReplace(object):
             count +=1
             time.sleep(1)
 
-    def handlefile(self, file):
-        with open(file) as u1:
-            content=u1.read()
-            if content.find("{% load static %}")==-1:
-                index=content.find("<!DOCTYPE html>")+len("<!DOCTYPE html>")
-                content = content[:index] + "\n {% load static %} \n" + content[index:]
-            r1 = content.replace(' src="', ' src="{% static \'')
-            r2 = r1.replace('.js"', '.js\' %}"')
-            r3 = r2.replace(' href="', ' href="{% static \'')
-            r4 = r3.replace('.css"', '.css\' %}"')
-            r5 = r4.replace('.ico"', '.ico\' %}"')
-            self.target=r5
+    def checkbuildassets(self):
+        self.readindex()
+        html = ''
+        if os.path.exists(self.assetsDir):
+            print("add hashed tag to filename:")
+            with os.scandir(self.assetsDir) as items:
+                for entry in items:
+                    if entry.is_file():
+                        p = Path(entry.path)
+                        suffix = p.suffix
+                        hashtag = self.hashfile(entry.path)
+                        if suffix !=".ico":
+                            newName = p.rename(Path(p.parent, f"{p.stem}_{hashtag}{p.suffix}"))
+                        else:
+                            newName = p.rename(Path(p.parent, f"{p.stem}{p.suffix}"))
+                        print(newName)
+                        if entry.name in html_assets.keys():
+                            html = html + html_assets[entry.name] + newName.name + assets_end[suffix]
+                        else:
+                            html = html + assets_head[suffix] + newName.name + assets_end[suffix]
+
+                if html != "":
+                    if self.html.find("</head") != -1:
+                        index = self.html.find("</head>")
+                        self.html = self.html[:index] + html + self.html[index:]
+                        return True
 
     def writefile(self,file):
         file2= Path(self.dirname) / "templates" / file
@@ -104,33 +140,28 @@ class ToReplace(object):
         if os.path.exists(file):
            os.remove(file)
 
+
+    def hashfile(self,filename):
+        with open(filename, "rb") as f:
+            buf = f.read()
+        m = hashlib.md5(buf)
+        return m.hexdigest()[0:12]
+
     def main(self):
         if self.checkprojctName():
             self.assignDir()
         else:
             print("no Django project founded!")
             exit(0)
-        sys.argv
         if len(sys.argv) >= 2:
             if sys.argv[1]=="debug":
-                if self.checkassets():
+                if self.checkdebugassets():
                     with open(self.indexfile, "w") as file:
                         file.write(self.html)
                 exit()
-            # self.dirname = sys.argv[1]
-
-        if os.path.exists(Path(self.dirname) / "statics"):
-            with os.scandir(Path(self.dirname) / "statics") as it:
-                for entry in it:
-                    if entry.name=="index.html" and entry.is_file():
-                        self.handlefile(entry.path)
-                        self.writefile(entry.name)
-                        self.removefile(entry.path)
-                        break
-            exit()
-        else:
-            print("No dir list")
-            exit()
+        if self.checkbuildassets():
+            with open(self.indexfile, "w") as file:
+                file.write(self.html)
 
 
 if __name__ == '__main__':
