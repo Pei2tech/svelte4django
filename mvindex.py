@@ -115,7 +115,7 @@ class ToReplace(object):
                         p = Path(entry.path)
                         suffix = p.suffix
                         hashtag = self.hashfile(entry.path)
-                        if suffix !=".ico":
+                        if entry.name in ["main.js","main.css"]:
                             newName = p.rename(Path(p.parent, f"{p.stem}_{hashtag}{p.suffix}"))
                         else:
                             newName = p.rename(Path(p.parent, f"{p.stem}{p.suffix}"))
