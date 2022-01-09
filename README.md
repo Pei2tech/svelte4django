@@ -1,7 +1,11 @@
 Introduction  
 ===========  
-A simple template for Django + Svelte + Vite + Tailwindcss.     
+A simple template for Django + Svelte + Vite + Tailwindcss.   
+It supports HMR for debug mode.  
 
+**Note:** If you are new to use restful api in the Django, you should try the [Django Ninja](https://django-ninja.rest-framework.com).   
+
+   
 Installation 
 ========
 ## Install by git clone
@@ -36,6 +40,8 @@ $npm install
 ```  
 
 ## Install by command line 
+
+Before installing it, please download **mvindex.py** and **vite.config.js** from this repository. 
 
 install vite with svelte
 ```
@@ -131,7 +137,7 @@ Running
 
 ## run on local debug mode  
 
-You can debug frontend (svelte side) and backend (django side) at the same time , so you need  two terminals to run it.   
+In order to debug frontend (svelte side) and backend (django side) at the same time , you need open two terminals.   
 
 **Django side**  
 
@@ -165,7 +171,7 @@ mysite/statics/assets/vendor.js   3.07 KiB / gzip: 1.42 KiB
 mysite/statics/assets/main.css    5.72 KiB / gzip: 1.97 KiB
 built in 898ms.
 ```   
- Just open your browser at  [http://127.0.0.1:8000](http://127.0.0.1:8000).  The "hello world!!" should be show on the screen.    
+ Just open your browser at  [http://127.0.0.1:8000](http://127.0.0.1:8000).  The "hello world!!" should be show on the screen if you install by git clone.     
 
 ## run on production mode  
 
