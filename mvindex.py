@@ -107,24 +107,37 @@ class ToReplace(object):
     def checkbuildassets(self):
         self.readindex()
         html = ''
+        vendorfile=[]
+        vendortag=[]
         if os.path.exists(self.assetsDir):
-            print("add hashed tag to filename:")
+            print("add hashed tag to main files")
             with os.scandir(self.assetsDir) as items:
                 for entry in items:
                     if entry.is_file():
                         p = Path(entry.path)
                         suffix = p.suffix
                         hashtag = self.hashfile(entry.path)
-                        if entry.name in ["main.js","main.css"]:
-                            newName = p.rename(Path(p.parent, f"{p.stem}_{hashtag}{p.suffix}"))
+                        if entry.name in ['main.js']: # , "main.css"]:
+                             newName = p.rename(Path(p.parent, f"{p.stem}_{hashtag}{p.suffix}"))
+                             mainName=newName
                         else:
-                            newName = p.rename(Path(p.parent, f"{p.stem}{p.suffix}"))
+                             # print(entry.path)
+                             # print(Path(p.parent, f"{p.stem}_{hashtag}{p.suffix}"))
+                             newName = p.rename(Path(p.parent, f"{p.stem}_{hashtag}{p.suffix}"))
+                             if suffix==".js":
+                                 # vendorName = newName
+                                 vendorfile.append(entry.name)
+                                 vendortag.append(newName)
                         print(newName)
                         if entry.name in html_assets.keys():
                             html = html + html_assets[entry.name] + newName.name + assets_end[suffix]
                         else:
                             html = html + assets_head[suffix] + newName.name + assets_end[suffix]
 
+                for index, name in enumerate(vendorfile):
+                    content = mainName.read_text()
+                    r1 = content.replace(name, vendortag[index].name)
+                mainName.write_text(r1)
                 if html != "":
                     if self.html.find("</head") != -1:
                         index = self.html.find("</head>")
