@@ -189,7 +189,7 @@ You will see the files already hashed as the following ouput.
 add hashed tag to main files:
 .../mysite/statics/assets/main_b915bd7db1c7.js
 .../mysite/statics/assets/vendor_3e5f9a7a9227.js
-.../mysite/statics/assets/favicon_ba44f340afba.ico
+.../mysite/statics/favicon.ico
 .../mysite/statics/assets/main_925825c51380.css
 ```
 

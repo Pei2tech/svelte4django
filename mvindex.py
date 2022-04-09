@@ -91,7 +91,8 @@ class ToReplace(object):
                     else:
                         time.sleep(0.2)
                         html =html+ assets_head[extension] + entry.name + assets_end[extension]
-
+                    if entry.name == "favicon.ico":
+                        Path(entry.path).rename(Path(self.staticDir, entry.name))
 
                 if html != "" and ("main.js" in assetf) :
                     if self.html.find("</head")!=-1:
@@ -120,20 +121,20 @@ class ToReplace(object):
                         if entry.name in ['main.js']: # , "main.css"]:
                              newName = p.rename(Path(p.parent, f"{p.stem}_{hashtag}{p.suffix}"))
                              mainName=newName
-                        else:
-                             # print(entry.path)
-                             # print(Path(p.parent, f"{p.stem}_{hashtag}{p.suffix}"))
+                        elif suffix in [".js", ".css"]:
                              newName = p.rename(Path(p.parent, f"{p.stem}_{hashtag}{p.suffix}"))
-                             if suffix==".js":
-                                 # vendorName = newName
+                             if suffix == ".js":
                                  vendorfile.append(entry.name)
                                  vendortag.append(newName)
-                        print(newName)
+                        if entry.name=="favicon.ico":
+                            print(p.rename(Path(self.staticDir, entry.name)))
+                            continue
+                        else:
+                            print(newName)
                         if entry.name in html_assets.keys():
                             html = html + html_assets[entry.name] + newName.name + assets_end[suffix]
                         else:
                             html = html + assets_head[suffix] + newName.name + assets_end[suffix]
-
                 for index, name in enumerate(vendorfile):
                     content = mainName.read_text()
                     r1 = content.replace(name, vendortag[index].name)
@@ -175,6 +176,7 @@ class ToReplace(object):
         if self.checkbuildassets():
             with open(self.indexfile, "w") as file:
                 file.write(self.html)
+
 
 
 if __name__ == '__main__':
