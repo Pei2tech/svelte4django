@@ -8,6 +8,8 @@ It supports HMR for debug mode.
    
 Installation 
 ========
+You can install it by git clone or command line(step by step).
+
 ## Install by git clone
 
 **Clone this repository and go into the directory**
