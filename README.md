@@ -5,7 +5,7 @@ It supports HMR for debug mode.
 
 **Note:**   
     1. If you are new to use restful api in the Django, you should try the [Django Ninja](https://django-ninja.rest-framework.com).   
-    2. Tf you want to use router, the [svelte-navigator](https://github.com/mefechoel/svelte-navigator) could be a good option.
+    2. If you want to use router, the [svelte-navigator](https://github.com/mefechoel/svelte-navigator) could be a good option.
 
    
 Installation 
