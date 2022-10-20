@@ -3,14 +3,16 @@ Introduction
 A simple template for Django + Svelte + Vite + Tailwindcss.   
 It supports HMR for debug mode.  
 
-**Note:** If you are new to use restful api in the Django, you should try the [Django Ninja](https://django-ninja.rest-framework.com).   
+**Note:**   
+    1. If you are new to use restful api in the Django, you should try the [Django Ninja](https://django-ninja.rest-framework.com).   
+    2. If you want to use router, the [svelte-navigator](https://github.com/mefechoel/svelte-navigator) could be a good option.
 
    
 Installation 
 ========
 You can install it by git clone or command line(step by step).
 
-## Install by git clone
+## Install it by git clone
 
 **Clone this repository and go into the directory**
 
@@ -41,7 +43,7 @@ with npm
 $npm install    
 ```  
 
-## Install by command line 
+## Install it by command line 
 
 Before installing it, please download **mvindex.py** and **vite.config.js** from this repository. 
 
