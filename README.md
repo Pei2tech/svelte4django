@@ -105,7 +105,7 @@ urlpatterns = [
 
 We use "templates" as the directory of html file, please update ALLOWED_HOSTS and the DIRS of TEMPLATES in the file named settings.py
 ```
-ALLOWED_HOSTS = ['127.0.0.1','loclahost']
+ALLOWED_HOSTS = ['127.0.0.1','localhost']
 
 TEMPLATES = [
     {
