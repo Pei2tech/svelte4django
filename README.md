@@ -175,7 +175,7 @@ mysite/statics/assets/vendor.js   3.07 KiB / gzip: 1.42 KiB
 mysite/statics/assets/main.css    5.72 KiB / gzip: 1.97 KiB
 built in 898ms.
 ```   
- Just open your browser at  [http://127.0.0.1:8000](http://127.0.0.1:8000).  The "hello world!!" should be show on the screen if you install by git clone.     
+ Just open your browser at  [http://127.0.0.1:8000](http://127.0.0.1:8000).  The "hello world!!" should be show on the screen if the installation is made by git clone.     
 
 ## run on production mode  
 
