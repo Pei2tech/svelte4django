@@ -16,11 +16,13 @@ assets_head={
     ".js":" <script type=\"module\" href=\"{% static 'assets/",
     ".css":" <link rel=\"stylesheet\" href=\"{% static 'assets/",
     ".ico":" <link rel=\"ico\" href=\"{% static 'assets/",
+    ".svg":" <link rel=\"icon\" href=\"{% static 'assets/",
 }
 assets_end ={
     ".js": "' %}\"></script>\n",
     ".css": "' %}\">\n",
     ".ico": "' %}\">\n",
+    ".svg": "' %}\">\n",
 }
 
 html_assets={
@@ -38,6 +40,8 @@ class ToReplace(object):
        self.staticDir = BASE_DIR / self.dirname / "statics"
        self.assetsDir = self.staticDir / "assets"
        self.indexfile = BASE_DIR / self.dirname / "templates" / "index.html"
+       if not self.templateDir.exists():
+           self.templateDir.mkdir(parents=True, exist_ok=True)
 
 
     def checkprojctName(self):
@@ -56,8 +60,11 @@ class ToReplace(object):
         html = ""
         with open(file) as u1:
             for content in u1:
-                if content.find("<!DOCTYPE html>") != -1:
-                    index = content.find("<!DOCTYPE html>") + len("<!DOCTYPE html>")
+                if content.find("<!DOCTYPE html>") != -1 or content.find("<!doctype html>") != -1:
+                    if content.find("<!DOCTYPE html>") != -1:
+                        index = content.find("<!DOCTYPE html>") + len("<!DOCTYPE html>")
+                    elif content.find("<!doctype html>") != -1 :
+                        index = content.find("<!doctype html>") + len("<!doctype html>")
                     content = content[:index] + "\n {% load static %} \n" + content[index:]
                     html = html + content
                 elif content.find("favicon.ico") != -1:
@@ -110,6 +117,7 @@ class ToReplace(object):
         html = ''
         vendorfile=[]
         vendortag=[]
+        r1=""
         if os.path.exists(self.assetsDir):
             print("add hashed tag to main files")
             with os.scandir(self.assetsDir) as items:
@@ -129,16 +137,22 @@ class ToReplace(object):
                         if entry.name=="favicon.ico":
                             print(p.rename(Path(self.staticDir, entry.name)))
                             continue
-                        else:
+                        elif suffix in [".js", ".css"]:
                             print(newName)
+                        else:
+                            print(p.absolute())
+
                         if entry.name in html_assets.keys():
                             html = html + html_assets[entry.name] + newName.name + assets_end[suffix]
-                        else:
+                        elif suffix in [".js", ".css"]:
                             html = html + assets_head[suffix] + newName.name + assets_end[suffix]
+                        else:
+                            html = html + assets_head[suffix] + entry.name + assets_end[suffix]
                 for index, name in enumerate(vendorfile):
                     content = mainName.read_text()
                     r1 = content.replace(name, vendortag[index].name)
-                mainName.write_text(r1)
+                if r1!="":
+                    mainName.write_text(r1)
                 if html != "":
                     if self.html.find("</head") != -1:
                         index = self.html.find("</head>")

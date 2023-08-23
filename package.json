@@ -1,6 +1,7 @@
 {
-  "name": "svelte4django",
-  "version": "0.0.2",
+  "name": "auditory",
+  "private": true,
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "delete": "del --force mysite/statics/assets",
@@ -11,15 +12,12 @@
     "watch": "python mvindex.py debug & vite build --watch "
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.11",
-    "autoprefixer": "^10.3.7",
-    "cssnano": "^5.0.8",
-    "del-cli": "^4.0.1",
-    "postcss": "^8.3.9",
-    "postcss-load-config": "^3.1.0",
-    "svelte": "^3.37.0",
-    "svelte-preprocess": "^4.9.8",
-    "tailwindcss": "^2.2.16",
-    "vite": "^2.7.10"
+    "@sveltejs/vite-plugin-svelte": "^2.4.2",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24",
+    "postcss-load-config": "^4.0.1",
+    "svelte": "^4.0.5",
+    "tailwindcss": "^3.3.2",
+    "vite": "^4.4.5"
   }
 }

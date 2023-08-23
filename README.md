@@ -49,7 +49,7 @@ Before installing it, please download **mvindex.py** and **vite.config.js** from
 
 install vite with svelte
 ```
-$npm init @vitejs/app projectname 
+$npm init vite projectname
 # choose svelte, cd into directory 
 $cd projectname
 $npx svelte-add@latest postcss
@@ -58,29 +58,6 @@ $npx svelte-add@latest tailwindcss
 Install the node dependencies 
 ```
 $npm install 
-```
-In order to support postcss, add file app.postcss
-
-```
-$cd src
-$touch app.postcss
-```
-add below content into app.postcss
-```
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-```
-replace "./app.css" to "./app.postcss" in the main.js
-```
-import "./app.postcss";
-import App from "./App.svelte";
-
-const app = new App({
-  target: document.getElementById("app"),
-});
-
-export default app;
 ```
 
 Install django at the **root of your project**. It is the same as installation by git clone.  after that, you need create a project by the command "django-admin".   Below codes just use "mysite" as the django project, however you can change what you want.
@@ -91,6 +68,7 @@ you can use below command to check the installation of django is ok or not.
 
 ```
 $cd mysite
+$python manage.py migrate
 $python manage.py runserver
 ```
 
@@ -114,6 +92,16 @@ TEMPLATES = [
        ...
     },
 ]
+
+```
+
+Please also add the static directory in the settings.py.
+```
+STATICFILES_DIRS = [
+    BASE_DIR / "statics",
+]
+
+STATIC_ROOT = 'staticfiles'
 
 ```
 
@@ -165,15 +153,14 @@ $npm run watch
 
 You’ll see the following output on the command line:   
 
-```  
-transforming (1) src/main.js
-warn - You have enabled the JIT engine which is currently in preview.
-warn - Preview features are not covered by semver, may introduce breaking changes, and can change at any time.
-✓ 5 modules transformed.
-mysite/statics/assets/main.js     1.79 KiB / gzip: 0.96 KiB
-mysite/statics/assets/vendor.js   3.07 KiB / gzip: 1.42 KiB
-mysite/statics/assets/main.css    5.72 KiB / gzip: 1.97 KiB
-built in 898ms.
+```
+watching for file changes...
+
+build started...
+✓ 26 modules transformed.
+mysite/statics/assets/main.css  7.39 kB │ gzip: 2.19 kB
+mysite/statics/assets/main.js   5.22 kB │ gzip: 2.43 kB
+built in 735ms.
 ```   
  Just open your browser at  [http://127.0.0.1:8000](http://127.0.0.1:8000).  The "hello world!!" should be show on the screen if you install by git clone.     
 
@@ -192,7 +179,6 @@ You will see the files already hashed as the following ouput.
 ```
 add hashed tag to main files:
 .../mysite/statics/assets/main_b915bd7db1c7.js
-.../mysite/statics/assets/vendor_3e5f9a7a9227.js
 .../mysite/statics/favicon.ico
 .../mysite/statics/assets/main_925825c51380.css
 ```
