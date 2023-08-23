@@ -83,7 +83,7 @@ urlpatterns = [
 
 We use "templates" as the directory of html file, please update ALLOWED_HOSTS and the DIRS of TEMPLATES in the file named settings.py
 ```
-ALLOWED_HOSTS = ['127.0.0.1','loclahost']
+ALLOWED_HOSTS = ['127.0.0.1','localhost']
 
 TEMPLATES = [
     {
@@ -162,7 +162,7 @@ mysite/statics/assets/main.css  7.39 kB │ gzip: 2.19 kB
 mysite/statics/assets/main.js   5.22 kB │ gzip: 2.43 kB
 built in 735ms.
 ```   
- Just open your browser at  [http://127.0.0.1:8000](http://127.0.0.1:8000).  The "hello world!!" should be show on the screen if you install by git clone.     
+ Just open your browser at  [http://127.0.0.1:8000](http://127.0.0.1:8000).  The "hello world!!" should be show on the screen if the installation is made by git clone.     
 
 ## run on production mode  
 
