@@ -185,3 +185,7 @@ add hashed tag to main files:
 
 **django side**    
 you may use gunicorn, nginx or other else to run django. It is out of the scope of this template.    
+
+## Note:
+  1. Some packages still don't support svelte 4 yet, you can downgrade svelte to version 3.x.
+  2. The file App.svelte, created by Vite, which uses "import" function to the "src" of the logo file can not work for django. The solution is to assign a new variable for the logo file of static path.
