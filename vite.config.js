@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import path from "path";
-import glob from "glob";
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
@@ -20,7 +19,7 @@ export default defineConfig({
         chunkFileNames: `[name].js`,
         assetFileNames: `[name].[ext]`,
       },
-      input: glob.sync(path.resolve(_dirname, "src", "main.js")),
+      input: path.resolve(_dirname, "src", "main.js"),
       // external: [
       // ],
     },
