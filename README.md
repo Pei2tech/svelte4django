@@ -5,7 +5,7 @@ It supports HMR for debug mode.
 
 **Note:**   
     1. If you are new to use restful api in the Django, you should try the [Django Ninja](https://django-ninja.rest-framework.com).   
-    2. If you want to use router, the [svelte-navigator](https://github.com/mefechoel/svelte-navigator) could be a good option.
+    2. If you want to use router, the or [svelte-navigator](https://github.com/mefechoel/svelte-navigator) (Svelte 3) or [svelte-routing](https://github.com/EmilTholin/svelte-routing) (Svelte 3, 4) could be a good option.
 
    
 Installation 
@@ -162,7 +162,7 @@ mysite/statics/assets/main.css  7.39 kB │ gzip: 2.19 kB
 mysite/statics/assets/main.js   5.22 kB │ gzip: 2.43 kB
 built in 735ms.
 ```   
- Just open your browser at  [http://127.0.0.1:8000](http://127.0.0.1:8000).  The "hello world!!" should be show on the screen if the installation is made by git clone.     
+Just open your browser at  [http://127.0.0.1:8000](http://127.0.0.1:8000).  The "hello world!!" should be show on the screen if the installation is made by git clone.     
 
 ## run on production mode  
 
@@ -198,4 +198,4 @@ you may use gunicorn, nginx or other else to run django. It is out of the scope 
      }
   }
 ``` 
-  2. The file App.svelte, created by Vite, which uses "import" function to the "src" of the logo file can not work for django. The solution is to assign a new variable for the logo file of static path.
+  2. The file App.svelte, created by Vite, uses the "import" function to reference the "src" of the logo file, which does not work for Django. The solution is to assign a new variable for the logo file with a static path.  
