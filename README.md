@@ -5,7 +5,7 @@ It supports HMR for debug mode.
 
 **Note:**   
     1. If you are new to use restful api in the Django, you should try the [Django Ninja](https://django-ninja.rest-framework.com).   
-    2. If you want to use router, the [svelte-navigator](https://github.com/mefechoel/svelte-navigator) could be a good option.
+    2. If you want to use router, [svelte-navigator](https://github.com/mefechoel/svelte-navigator) (Svelte 3) or [svelte-routing](https://github.com/EmilTholin/svelte-routing) (Svelte 3, 4) could be a good options. Alternatively, you can also refer [Is there a router?](https://svelte.dev/docs/faq#is-there-a-router) for other choices.
 
    
 Installation 
@@ -49,8 +49,8 @@ Before installing it, please download **mvindex.py** and **vite.config.js** from
 
 install vite with svelte
 ```
-$npm init vite projectname
-# choose svelte, cd into directory 
+$npm create vite@latest projectname -- --template svelte 
+  #go into the directory of projectname
 $cd projectname
 $npx svelte-add@latest postcss
 $npx svelte-add@latest tailwindcss
@@ -162,7 +162,7 @@ mysite/statics/assets/main.css  7.39 kB │ gzip: 2.19 kB
 mysite/statics/assets/main.js   5.22 kB │ gzip: 2.43 kB
 built in 735ms.
 ```   
- Just open your browser at  [http://127.0.0.1:8000](http://127.0.0.1:8000).  The "hello world!!" should be show on the screen if the installation is made by git clone.     
+Just open your browser at  [http://127.0.0.1:8000](http://127.0.0.1:8000).  The "hello world!!" should be show on the screen if the installation is made by git clone.     
 
 ## run on production mode  
 
@@ -187,5 +187,15 @@ add hashed tag to main files:
 you may use gunicorn, nginx or other else to run django. It is out of the scope of this template.    
 
 ## Note:
-  1. Some packages still don't support svelte 4 yet, you can downgrade svelte to version 3.x.
-  2. The file App.svelte, created by Vite, which uses "import" function to the "src" of the logo file can not work for django. The solution is to assign a new variable for the logo file of static path.
+  1. Some packages still don't support svelte 4 yet, you can downgrade svelte to version 3.x or just override it in the package.json.
+     Example:
+``` 
+  {
+     "overrides": {
+       "svelte-navigator": {
+        "svelte": ">=4.x"
+       }
+     }
+  }
+``` 
+  2. The file App.svelte, created by Vite, uses the "import" function to reference the "src" of the logo file, which does not work for Django. The solution is to assign a new variable for the logo file with a static path.  
