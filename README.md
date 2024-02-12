@@ -49,8 +49,8 @@ Before installing it, please download **mvindex.py** and **vite.config.js** from
 
 install vite with svelte
 ```
-$npm init vite projectname
-# choose svelte, cd into directory 
+$npm create vite@latest projectname -- --template svelte 
+  #go into the directory of projectname
 $cd projectname
 $npx svelte-add@latest postcss
 $npx svelte-add@latest tailwindcss
