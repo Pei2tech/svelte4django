@@ -42,6 +42,10 @@ class ToReplace(object):
        self.indexfile = BASE_DIR / self.dirname / "templates" / "index.html"
        if not self.templateDir.exists():
            self.templateDir.mkdir(parents=True, exist_ok=True)
+       if not self.staticDir.exists():
+           self.staticDir.mkdir(parents=True, exist_ok=True)
+       if not self.assetsDir.exists():
+           self.assetsDir.mkdir(parents=True, exist_ok=True)
 
 
     def checkprojctName(self):
