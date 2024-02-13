@@ -112,7 +112,14 @@ If anything is done, please copy the mvindex,py and vite.config.js from this rep
 ```
 outDir: path.join(_dirname, "mysite/statics/assets"),
 ```
-Please modify the scripts of package.json as following.  We use the del-cli dependence to clear the directory, so you may install it first.  Please also change the mysite as you use another project name for django. 
+
+We use the del-cli dependence to clear the directory, so you may install it first. 
+
+```
+$npm i -D del-cli
+```
+
+Please modify the scripts of package.json as following.  Please also change the mysite as you use another project name for django. 
 
 ```
 "scripts": {
@@ -126,28 +133,20 @@ Please modify the scripts of package.json as following.  We use the del-cli depe
 
 ```
 
+
+
 Running
 ======
 
 ## run on local debug mode  
 
-In order to debug frontend (svelte side) and backend (django side) at the same time , you need open two terminals.   
+In order to debug frontend (svelte side) and backend (django side) at the same time , you need open two terminals. 
 
-**Django side**  
-
-Change into the root directory (mysite) of django, if you haven't already, and run the migrate. After that, you can run the development server up.    
-Note: please make sure the virtual environment running if you have used it.   
-```  
-(.venv)...$cd mysite
-(.venv)...$python manage.py migrate
-...
-(.venv)...$python manage.py runserver
-```  
-You will see the ouput on the command line for Starting development server at http://127.0.0.1:8000/ .  
+When running the project for the first time, please run the Svelte side first in order to properly initialize the target directory.
 
 **Svelte side**    
 
-Take another terminal on, and change into the project root to run below command.  
+Take the terminal on, and change into the project root to run below command.  
 
 ```  
 $npm run watch
@@ -164,6 +163,19 @@ mysite/statics/assets/main.css  7.39 kB │ gzip: 2.19 kB
 mysite/statics/assets/main.js   5.22 kB │ gzip: 2.43 kB
 built in 735ms.
 ```   
+
+**Django side**  
+
+Change into the root directory (mysite) of django, if you haven't already, and run the migrate. After that, you can run the development server up.    
+Note: please make sure the virtual environment running if you have used it.   
+```  
+(.venv)...$cd mysite
+(.venv)...$python manage.py migrate
+...
+(.venv)...$python manage.py runserver
+```  
+You will see the output on the command line for Starting development server at http://127.0.0.1:8000/ .  
+
 Just open your browser at  [http://127.0.0.1:8000](http://127.0.0.1:8000).  The "hello world!!" should be show on the screen if the installation is made by git clone.     
 
 ## run on production mode  
