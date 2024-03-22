@@ -6,7 +6,7 @@ It supports HMR for debug mode.
 **Note:**   
     1. If you are new to use restful api in the Django, you should try the [Django Ninja](https://django-ninja.rest-framework.com).   
     2. If you want to use router, [svelte-navigator](https://github.com/mefechoel/svelte-navigator) (Svelte 3) or [svelte-micro](https://github.com/ayndqy/svelte-micro) (Svelte 3, 4) could be a good options. Alternatively, you can also refer [Is there a router?](https://svelte.dev/docs/faq#is-there-a-router) for other choices.  
-    3. If using git clone for installation, the client-side router [svelte-micro](https://github.com/ayndqy/svelte-micro) has been added to the template.  
+    3. If using git clone for installation, the client-side router [svelte-micro](https://github.com/ayndqy/svelte-micro) and some sample code have been added to the template.  
    
 Installation 
 ========
