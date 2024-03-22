@@ -20,4 +20,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path("",TemplateView.as_view(template_name="../templates/index.html")),
     path('admin/', admin.site.urls),
+    # below code is for page refresh
+    path("about", TemplateView.as_view(template_name="../templates/index.html")),
+    path("contactus", TemplateView.as_view(template_name="../templates/index.html")),
 ]

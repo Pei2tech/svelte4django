@@ -20,5 +20,8 @@
     "svelte": "^4.0.5",
     "tailwindcss": "^3.3.2",
     "vite": "^4.4.5"
+  },
+  "dependencies": {
+    "svelte-micro": "^2.5.6"
   }
 }
