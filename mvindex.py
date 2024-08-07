@@ -155,8 +155,16 @@ class ToReplace(object):
                 for index, name in enumerate(vendorfile):
                     content = mainName.read_text()
                     r1 = content.replace(name, vendortag[index].name)
-                if r1!="":
-                    mainName.write_text(r1)
+
+                    if r1!="":
+                        mainName.write_text(r1)
+                for name in vendortag:
+                    content = name.read_text()
+                    r2 = content.replace("main.js", mainName.name)
+
+                    if r2!="":
+                        name.write_text(r2)
+
                 if html != "":
                     if self.html.find("</head") != -1:
                         index = self.html.find("</head>")
