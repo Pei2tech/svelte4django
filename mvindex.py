@@ -1,6 +1,7 @@
 import sys
 import os
 import time
+import datetime
 from pathlib import Path
 import hashlib
 
@@ -184,7 +185,8 @@ class ToReplace(object):
     def hashfile(self,filename):
         with open(filename, "rb") as f:
             buf = f.read()
-        m = hashlib.md5(buf)
+        btime=datetime.datetime.now().strftime("%d/%m/%y %H:%M:%S.%f").encode('ascii')
+        m = hashlib.md5(buf+btime)
         return m.hexdigest()[0:12]
 
     def main(self):
