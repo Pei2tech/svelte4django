@@ -12,7 +12,7 @@ Installation
 ========
 You can install it by git clone (router included) or command line(step by step).
 
-## Install it by git clone
+## Install it by git clone (Svelte 4)
 
 **Clone this repository and go into the directory**
 
@@ -43,19 +43,19 @@ with npm
 $npm install    
 ```  
 
-## Install it by command line 
+## Install it by command line (Svelte 5)
 
-Before installing it, please download **mvindex.py** and **vite.config.js** from this repository. 
+Before installing it, please download **mvindex.py** from this repository. 
 
 install vite with svelte
 ```
 $npm create vite@latest projectname -- --template svelte
 ```
-Go into the directory of projectname and then add postcss and tailwindcss for svelte
+Go into the directory of projectname and then add tailwindcss for svelte
 ```  
 $cd projectname
-$npx svelte-add@latest postcss
-$npx svelte-add@latest tailwindcss
+$npx sv add tailwindcss
+
 ```
 Install the node dependencies 
 ```  
@@ -107,10 +107,38 @@ STATIC_ROOT = 'staticfiles'
 
 ```
 
-If anything is done, please copy the mvindex,py and vite.config.js from this repository to the root of your project, and then modify the outDir of vit.config.js as the project name of django is not "mysite". 
+If anything is done, please copy the mvindex,py from this repository to the root of your project, and then modify the vite.config.js as below code. Note:you may also modify the outDir as the project name of django is not "mysite". 
 
 ```
-outDir: path.join(_dirname, "mysite/statics/assets"),
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from 'vite'
+import { svelte } from '@sveltejs/vite-plugin-svelte'
+import path from "path";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const _filename = fileURLToPath(import.meta.url);
+const _dirname = dirname(_filename);
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [svelte(), tailwindcss()],
+  build: {
+    // below for main.js
+    outDir: path.join(_dirname, "mysite/statics/assets"),
+    rollupOptions: {
+      output: {
+        entryFileNames: `[name].js`,
+        chunkFileNames: `[name].js`,
+        assetFileNames: `[name].[ext]`,
+      },
+      input: path.resolve(_dirname, "src", "main.js"),
+      // external: [
+      // ],
+    },
+  },
+})
+
 ```
 
 We use the del-cli dependence to clear the directory, so you may install it first. 
@@ -201,15 +229,4 @@ add hashed tag to main files:
 you may use gunicorn, nginx or other else to run django. It is out of the scope of this template.    
 
 ## Note:
-  1. Some packages still don't support svelte 4 yet, you can downgrade svelte to version 3.x or just override it in the package.json.
-     Example:
-``` 
-  {
-     "overrides": {
-       "svelte-navigator": {
-        "svelte": ">=4.x"
-       }
-     }
-  }
-``` 
-  2. The file App.svelte, created by Vite, uses the "import" function to reference the "src" of the logo file, which does not work for Django. The solution is to assign a new variable for the logo file with a static path.  
+  1. The file App.svelte, created by Vite, uses the "import" function to reference the "src" of the logo file, which does not work for Django. The solution is to assign a new variable for the logo file with a static path.  
