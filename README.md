@@ -1,20 +1,20 @@
 Introduction  
 ===========  
-A simple template for Django + Svelte + Vite + Tailwindcss.   
+A simple template for Django + Svelte5 + Vite + Tailwindcss.   
 It supports HMR for debug mode.  
 
 **Note:**   
     1. If you are new to use restful api in the Django, you should try the [Django Ninja](https://django-ninja.rest-framework.com).    
-    2. To use Svelte 5 and Django together, the recommended installation method is via the command line, as described below.    
-    3. If you want to use router, [svelte-micro](https://github.com/ayndqy/svelte-micro) (Svelte 3, 4) could be a good options. Alternatively, you can also refer [Is there a router?](https://svelte.dev/docs/faq#is-there-a-router) or search from [github](https://github.com/search) for other choices.  
-    4. If using git clone for installation, the client-side router [svelte-micro](https://github.com/ayndqy/svelte-micro) and some sample code have been added to the template.   
+    2. To use Svelte 5 and Django together, the recommended installation method is via the command line, as described below.     
+    3. If you want to use router, you can also refer [Is there a router?](https://svelte.dev/docs/faq#is-there-a-router) or search from [github](https://github.com/search) for other choices.   
+    4. If using git clone for installation, the client-side router [svelte5-route](https://github.com/jpcutshall/svelte5-router) and some sample code have been added to the template.     
     
    
 Installation 
 ========
 You can install it by git clone (router included) or command line(step by step).
 
-## Install it by git clone (Svelte 4)
+## Install it by git clone (Svelte 5)
 
 **Clone this repository and go into the directory**
 
@@ -23,13 +23,8 @@ $ git clone  https://github.com/Pei2tech/svelte4django.git projectname
 $ cd projectname 
 ```
 
-This template uses [poetry](https://python-poetry.org/ "poetry") to manage python packages. However, you can just install django by pip as you don't use poetry.    
+**Install Django**
 
-```
-poetry shell
-poetry install
-```  
-or   
 ```   
 $ pip install django   
 ```   
@@ -64,7 +59,13 @@ Install the node dependencies
 $npm install 
 ```
 
-Install django at the **root of your project**. It is the same as installation by git clone.  after that, you need create a project by the command "django-admin".   Below codes just use "mysite" as the django project, however you can change what you want.
+Install django at the **root of your project**. 
+
+```   
+$ pip install django   
+```   
+
+After that, you need create a project by the command "django-admin".   Below codes just use "mysite" as the django project, however you can change what you want.
 ```
 $django-admin startproject mysite
 ```

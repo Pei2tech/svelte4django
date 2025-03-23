@@ -1,3 +1,4 @@
+import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import path from "path";
@@ -9,7 +10,7 @@ const _dirname = dirname(_filename);
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [svelte()],
+  plugins: [tailwindcss(),svelte()],
   build: {
     // below for main.js
     outDir: path.join(_dirname, "mysite/statics/assets"),
