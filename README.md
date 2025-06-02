@@ -8,7 +8,7 @@ It supports HMR for debug mode.
     2. To use Svelte 5 and Django together, the recommended installation method is via the command line, as described below.     
     3. If you want to use router, you can also refer [Is there a router?](https://svelte.dev/docs/faq#is-there-a-router) or search from [github](https://github.com/search) for other choices.   
     4. If using git clone for installation, the client-side router [svelte5-route](https://github.com/jpcutshall/svelte5-router) and some sample code have been added to the template.     
-    5. If you still want to keep svelte 4 in using, please refer [svelte4-vite-django](https://github.com/Pei2tech/svelte4-vite-django)  
+    5. If you still wish to use Svelte 4, please refer to the [svelte4-vite-django](https://github.com/Pei2tech/svelte4-vite-django). 
     
    
 Installation 
